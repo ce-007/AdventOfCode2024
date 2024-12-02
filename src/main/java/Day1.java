@@ -11,7 +11,7 @@ public class Day1 {
         List<Integer> two = new ArrayList<>();
         //List<Integer> distances = new ArrayList<>();
 
-        File file = new File("inputDayOne.txt");
+        File file = new File("inputDay1.txt");
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
