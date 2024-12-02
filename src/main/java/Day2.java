@@ -32,43 +32,30 @@ public class Day2 {
 
     public static boolean checkStatus(String[] temp) {
         boolean out = true;
-        boolean out2 = true;
         int f = Integer.valueOf(temp[0]) - Integer.valueOf(temp[1]);
         for (int i = 0; i < temp.length - 1; i++) {
             int a = Integer.valueOf(temp[i]);
-            int b = Integer.valueOf(temp[i+1]);
-            if(Math.abs(a-b) > 3 || a == b) {
-                if (!out) {
-                    out2 = false;
-                }
+            int b = Integer.valueOf(temp[i + 1]);
+            if (Math.abs(a - b) > 3 || a == b) {
                 out = false;
             }
-            if ((f > 0 && (a-b) < 0) || (f < 0 && (a-b) > 0)){
-                if (!out) {
-                    out2 = false;
-                }
+            if ((f > 0 && (a - b) < 0) || (f < 0 && (a - b) > 0)) {
                 out = false;
             }
         }
         return out;
     }
+
     public static boolean checkStatus2(List<String> temp) {
         boolean out = true;
-        boolean out2 = true;
         int f = Integer.valueOf(temp.get(0)) - Integer.valueOf(temp.get(1));
         for (int i = 0; i < temp.size() - 1; i++) {
             int a = Integer.valueOf(temp.get(i));
             int b = Integer.valueOf(temp.get(i + 1));
-            if(Math.abs(a-b) > 3 || a == b) {
-                if (!out) {
-                    out2 = false;
-                }
+            if (Math.abs(a - b) > 3 || a == b) {
                 out = false;
             }
-            if ((f > 0 && (a-b) < 0) || (f < 0 && (a-b) > 0)){
-                if (!out) {
-                    out2 = false;
-                }
+            if ((f > 0 && (a - b) < 0) || (f < 0 && (a - b) > 0)) {
                 out = false;
             }
         }
