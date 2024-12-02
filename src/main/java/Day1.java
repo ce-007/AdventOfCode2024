@@ -11,11 +11,11 @@ public class Day1 {
         List<Integer> two = new ArrayList<>();
         //List<Integer> distances = new ArrayList<>();
 
-        File file = new File("inputDay1.txt");
+        File file = new File("inputDay1");
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            String[] temp = data.split("   ");
+            String[] temp = data.split(" {3}");
             one.add(Integer.valueOf(temp[0]));
             two.add(Integer.valueOf(temp[1]));
         }
@@ -30,11 +30,11 @@ public class Day1 {
         System.out.println("part one: " + total);
 
         int p2Total = 0;
-        for (int i = 0; i < one.size(); i++) {
+        for (Integer integer : one) {
             int index = 0;
-            int oneI = one.get(i);
-            for (int j = 0; j < two.size(); j++) {
-                if (oneI == two.get(j)) {
+            int oneI = integer;
+            for (Integer value : two) {
+                if (oneI == value) {
                     index++;
                 }
             }
