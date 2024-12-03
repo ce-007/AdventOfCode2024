@@ -16,7 +16,6 @@ public class Day3 {
         }
         data.append("mul(0,0)don't()");
         while (!data.isEmpty()) {
-            System.out.println(total);
             int index = data.indexOf("mul(");
             int indexOfComma = data.indexOf(",", index);
             int indexOfEnd = data.indexOf(")", indexOfComma);
@@ -49,15 +48,11 @@ public class Day3 {
                 return false;
             }
         }
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
         return true;
     }
 
     private static boolean CheckStatus(String input, boolean og) {
-        System.out.println(input);
         if(input.contains("don't()")){
-            System.out.println("efsesffesef");
             return false;
         } else if (input.contains("do()")) {
             return true;
