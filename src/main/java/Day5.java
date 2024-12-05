@@ -42,8 +42,8 @@ public class Day5 {
         for (int i = 0; i < updatesList.size(); i++) {
             totalCorrect += checkIfCorrect(updatesList.get(i), data);
         }
-        System.out.println(totalCorrect);
-        System.out.println(totalIncorrect);
+        System.out.println("Part One: " + totalCorrect);
+        System.out.println("Part Two: " + totalIncorrect);
     }
 
     private static int checkIfCorrect(List<Integer> updateList, Map<Integer, List<Integer>> map) {
@@ -52,14 +52,9 @@ public class Day5 {
             List<Integer> data = map.get(update);
 
             for (int k = i + 1; k < updateList.size(); k++) {
-                boolean a;
-                try {
-                    a = data.contains(updateList.get(k));
-                } catch (Exception e) {
-                    fixIncorrect(updateList.toArray(new Integer[0]), map);
-                    return 0;
-                }
-                if (!a) {
+                boolean correct;
+                correct = data.contains(updateList.get(k));
+                if (!correct) {
                     fixIncorrect(updateList.toArray(new Integer[0]), map);
                     return 0;
                 }
@@ -70,14 +65,11 @@ public class Day5 {
 
     private static void fixIncorrect(Integer[] array, Map<Integer, List<Integer>> map) {
         for (int i = 0; i < array.length; i++) {
-            boolean fixMe = false;
+            boolean fixMe;
             int count = 0;
 
             for (int k = i + 1; k < array.length; k++) {
-                try {
-                    fixMe = map.get(array[i]).contains(array[k]);
-                } catch (Exception ignored) {
-                }
+                fixMe = map.get(array[i]).contains(array[k]);
                 if (!fixMe) {
                     count++;
                 }
@@ -89,7 +81,6 @@ public class Day5 {
                 i--;
             }
         }
-        System.out.println(List.of(array));
         totalIncorrect += array[(array.length / 2)];
     }
 }
