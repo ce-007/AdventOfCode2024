@@ -3,9 +3,12 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Day5 {
+    public static int totalIncorrect = 0;
+
     public static void main(String[] args) throws FileNotFoundException {
         boolean firstHalf = true;
-        int total = 0;
+        int totalCorrect = 0;
+
         File file = new File("inputDay5");
         Scanner scanner = new Scanner(file);
         Map<Integer, List<Integer>> data = new HashMap<>();
@@ -37,9 +40,10 @@ public class Day5 {
         }
 
         for (int i = 0; i < updatesList.size(); i++) {
-            total += checkIfCorrect(updatesList.get(i), data);
+            totalCorrect += checkIfCorrect(updatesList.get(i), data);
         }
-        System.out.println(total);
+        System.out.println(totalCorrect);
+        System.out.println(totalIncorrect);
     }
 
     private static int checkIfCorrect(List<Integer> updateList, Map<Integer, List<Integer>> map) {
@@ -52,14 +56,40 @@ public class Day5 {
                 try {
                     a = data.contains(updateList.get(k));
                 } catch (Exception e) {
+                    fixIncorrect(updateList.toArray(new Integer[0]), map);
                     return 0;
                 }
                 if (!a) {
+                    fixIncorrect(updateList.toArray(new Integer[0]), map);
                     return 0;
                 }
-
             }
         }
         return updateList.get((updateList.size() / 2));
+    }
+
+    private static void fixIncorrect(Integer[] array, Map<Integer, List<Integer>> map) {
+        for (int i = 0; i < array.length; i++) {
+            boolean fixMe = false;
+            int count = 0;
+
+            for (int k = i + 1; k < array.length; k++) {
+                try {
+                    fixMe = map.get(array[i]).contains(array[k]);
+                } catch (Exception ignored) {
+                }
+                if (!fixMe) {
+                    count++;
+                }
+            }
+            int temp = array[i];
+            array[i] = array[i + count];
+            array[i + count] = temp;
+            if (count != 0) {
+                i--;
+            }
+        }
+        System.out.println(List.of(array));
+        totalIncorrect += array[(array.length / 2)];
     }
 }
