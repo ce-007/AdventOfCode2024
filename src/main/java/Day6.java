@@ -6,10 +6,14 @@ import java.util.Scanner;
 
 public class Day6 {
     public static void main(String[] args) throws FileNotFoundException {
+        int initialX = 0;
+        int initialY = 0;
         int x = 0;
         int y = 0;
         int direction = 0;
+        int partTwo = 0;
         List<char[]> map = new ArrayList<>();
+        List<Coordinates> listOfPositions = new ArrayList<>();
         File file = new File("inputDay6");
         Scanner scanner = new Scanner(file);
 
@@ -20,6 +24,8 @@ public class Day6 {
             if (line.contains("^")) {
                 x = line.indexOf('^');
                 y = counter;
+                initialX = x;
+                initialY = y;
             }
             counter++;
         }
@@ -52,20 +58,61 @@ public class Day6 {
                     x--;
                 }
                 if (canEnter) {
+                    if (map.get(y)[x] != 'X') {
+                        listOfPositions.add(new Coordinates(x, y));
+                    }
                     map.get(y)[x] = 'X';
                 }
             } catch (Exception e) {
                 break;
             }
         }
-        int out = 0;
-        for (int i = 0; i < map.size(); i++) {
-            for (int j = 0; j < map.get(i).length; j++) {
-                if (map.get(i)[j] == 'X') {
-                    out++;
+        System.out.println("Part one: " + listOfPositions.size());
+        for (int i = 0; i < listOfPositions.size(); i++) {
+            map.get(listOfPositions.get(i).y)[listOfPositions.get(i).x] = '#';
+            partTwo += checkIfLoops(map, initialX,initialY,0);
+            map.get(listOfPositions.get(i).y)[listOfPositions.get(i).x] = '.';
+        }
+        System.out.println("Part two: " + partTwo);
+    }
+
+    private static int checkIfLoops(List<char[]> modifiedMap, int x, int y, int direction) {
+        for (int i = 0; i < modifiedMap.size()*1000; i++) {
+            try {
+                if (direction % 4 == 0 && modifiedMap.get(y - 1)[x] == '#') {
+                    direction++;
+                } else if (direction % 4 == 0) {
+                    y--;
                 }
+                if ((direction % 4) == 1 && modifiedMap.get(y)[x + 1] == '#') {
+                    direction++;
+                } else if (direction % 4 == 1) {
+                    x++;
+                }
+                if (direction % 4 == 2 && modifiedMap.get(y + 1)[x] == '#') {
+                    direction++;
+                } else if (direction % 4 == 2) {
+                    y++;
+                }
+                if (direction % 4 == 3 && modifiedMap.get(y)[x - 1] == '#') {
+                    direction++;
+                } else if (direction % 4 == 3) {
+                    x--;
+                }
+            } catch (Exception e) {
+                return 0;
             }
         }
-        System.out.println(out);
+        return 1;
+    }
+}
+
+class Coordinates {
+    public int x;
+    public int y;
+
+    public Coordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }
