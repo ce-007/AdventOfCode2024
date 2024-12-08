@@ -29,20 +29,11 @@ public class Day8 {
             List<Coordinates> coordinates = characterMap.get(characterMap.keySet().toArray()[i]);
             for (int j = 0; j < coordinates.size(); j++) {
                 for (int k = 0; k < coordinates.size(); k++) {
-                    int x = coordinates.get(j).x - coordinates.get(k).x;
-                    int y = coordinates.get(j).y - coordinates.get(k).y;
-                    int addX = coordinates.get(j).x + x;
-                    int addY = coordinates.get(j).y + y;
-                    if (!((coordinates.get(j).x == addX && coordinates.get(j).y == addY) || (coordinates.get(k).x == addX && coordinates.get(k).y == addY))) {
-                        if (!antinode.contains(new Coordinates(addX, addY)) && addX > -1 && addY > -1 && addX < size && addY < size) {
-                            antinode.add(new Coordinates(addX, addY));
-                        }
-                    }
-                    int subX = coordinates.get(k).x - x;
-                    int subY = coordinates.get(k).y - y;
-                    if (!((coordinates.get(j).x == subX && coordinates.get(j).y == subY) || (coordinates.get(k).x == subY && coordinates.get(k).y == subY))) {
-                        if (!antinode.contains(new Coordinates(subX, subY)) && subX > -1 && subY > -1 && subX < size && subY < size) {
-                            antinode.add(new Coordinates(subX, subY));
+                    for (int l = 0; l < size; l++) {
+                        int x = (coordinates.get(k).x - (coordinates.get(j).x - coordinates.get(k).x) * l);
+                        int y = (coordinates.get(k).y - (coordinates.get(j).y - coordinates.get(k).y) * l);
+                        if (!antinode.contains(new Coordinates(x, y)) && x > -1 && y > -1 && x < size && y < size) {
+                            antinode.add(new Coordinates(x, y));
                         }
                     }
                 }
