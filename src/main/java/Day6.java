@@ -1,3 +1,5 @@
+import util.Coordinates;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -104,15 +106,5 @@ public class Day6 {
             }
         }
         return 1;
-    }
-}
-
-class Coordinates {
-    public int x;
-    public int y;
-
-    public Coordinates(int x, int y) {
-        this.x = x;
-        this.y = y;
     }
 }
