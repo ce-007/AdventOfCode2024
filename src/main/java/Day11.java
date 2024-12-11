@@ -1,5 +1,3 @@
-import util.Coordinates;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,7 +15,7 @@ public class Day11 {
         }
 
         scanner.close();
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 75; i++) {
             for (int j = 0; j < input.size(); j++) {
                 if (input.get(j) == 0L) {
                     input.set(j, 1L);
