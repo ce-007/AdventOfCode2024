@@ -41,7 +41,6 @@ public class Day10 {
                 }
             }
         }
-
         int total = 0;
 
         for (Coordinates zero : zeros) {
@@ -64,32 +63,32 @@ public class Day10 {
         int x = start.x;
         int y = start.y;
 
-        Queue<Coordinates> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[localMap.size()][localMap.getFirst().size()];
+        List<List<Coordinates>> allPaths = new ArrayList<>();
+        List<Coordinates> currentPath = new ArrayList<>();
+        explorePaths(x, y, localMap, new boolean[localMap.size()][localMap.get(0).size()], currentPath, allPaths);
+        return allPaths.size();
+    }
 
-        queue.add(new Coordinates(x, y));
+    private static void explorePaths(int x, int y, List<List<Integer>> localMap, boolean[][] visited, List<Coordinates> currentPath, List<List<Coordinates>> allPaths) {
+        if (localMap.get(y).get(x) == 9) {
+            currentPath.add(new Coordinates(x, y));
+            allPaths.add(new ArrayList<>(currentPath));
+            currentPath.remove(currentPath.size() - 1);
+            return;
+        }
         visited[y][x] = true;
-        int pathCount = 0;
+        currentPath.add(new Coordinates(x, y));
 
-        while (!queue.isEmpty()) {
-            Coordinates current = queue.poll();
-            x = current.x;
-            y = current.y;
-            int height = localMap.get(y).get(x);
+        for (int[] direction : new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}) {
+            int nx = x + direction[0];
+            int ny = y + direction[1];
 
-            if (height == 9) {
-                pathCount++;
-            }
-            for (int[] direction : new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}) {
-                int nx = x + direction[0];
-                int ny = y + direction[1];
-                if (ny >= 0 && ny < localMap.size() && nx >= 0 && nx < localMap.get(ny).size() &&
-                        !visited[ny][nx] && localMap.get(ny).get(nx) == height + 1) {
-                    queue.add(new Coordinates(nx, ny));
-                    visited[ny][nx] = true;
-                }
+            if (ny >= 0 && ny < localMap.size() && nx >= 0 && nx < localMap.get(ny).size() && !visited[ny][nx] && localMap.get(ny).get(nx) == localMap.get(y).get(x) + 1) {
+                explorePaths(nx, ny, localMap, visited, currentPath, allPaths);
             }
         }
-        return pathCount;
+        currentPath.remove(currentPath.size() - 1);
+        visited[y][x] = false;
     }
+
 }
