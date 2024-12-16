@@ -19,9 +19,12 @@ public class Day14 {
             robots.add(new Robot(new Coordinates(Integer.parseInt(robot[0].substring(2)), Integer.parseInt(robot[1].substring(0, robot[1].indexOf(' ')))), Integer.parseInt(robot[1].substring(robot[1].indexOf('=') + 1)), Integer.parseInt(robot[2])));
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10000; i++) {
             for (int j = 0; j < robots.size(); j++) {
                 robots.get(j).moveRobot();
+                if (checkMap(robots)) {
+                    System.out.println(i);
+                }
             }
         }
 
@@ -48,6 +51,42 @@ public class Day14 {
             total *= quads[i];
         }
         System.out.println(total);
+    }
+
+    private static boolean checkMap(List<Robot> robots) {
+        List<Integer[]> map = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            Integer[] partMap = new Integer[width];
+            for (int j = 0; j < width; j++) {
+                partMap[j] = 0;
+            }
+            map.add(partMap);
+        }
+
+        for (int i = 0; i < robots.size(); i++) {
+            map.get(robots.get(i).coordinates.y)[robots.get(i).coordinates.x]++;
+        }
+        if (hasManyRobotsInARow(map)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean hasManyRobotsInARow(List<Integer[]> map) {
+        for (int i = 0; i < map.size(); i++) {
+            int row = 0;
+            for (int j = 0; j < map.get(i).length; j++) {
+                if (map.get(i)[j] == 1) {
+                    row++;
+                } else {
+                    row = 0;
+                }
+                if (row > 30) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 
